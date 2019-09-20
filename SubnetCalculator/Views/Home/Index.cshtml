@@ -1,0 +1,182 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <style>
+        .invisivel{
+            display: none;
+        }
+    </style>
+</head>
+
+<div class="jumbotron">
+    <div class="container">
+        <p class="display-4 mx-auto">Calculadora IPv4</p>
+        <br />
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row col-12">
+                        <p class="lead"> Informe 2 Elementos abaixo:</p>
+                        <p class="lead"> Obs: Não pode ser mais e nem menos.</p>
+                        <div class="form-group">
+                            <label for="ipRede">IP Rede</label>
+                            <input type="text" class="form-control" id="ipRede" placeholder="Informe o IP de Rede" required pattern="^([0-9]{1,3}\.){3}[0-9]{1,3}$">
+                        </div>
+                        <div class="form-group ml-3">
+                            <label for="hostInicial">Host Inicial</label>
+                            <input type="text" class="form-control" id="hostInicial" placeholder="Informe o Host Inicial">
+                        </div>
+                        <div class="form-group">
+                            <label for="hostFinal">Host Final</label>
+                            <input type="text" class="form-control" id="hostFinal" placeholder="Informe o Host Final">
+                        </div>
+                        <div class="form-group ml-3">
+                            <label for="ipBroadcast">IP Broadcast</label>
+                            <input type="text" class="form-control" id="ipBroadcast" placeholder="Informe o IP de Broadcast">
+                        </div>
+                        <div class="form-group">
+                            <label for="MascaraRede">Máscara de Rede</label>
+                            <input type="text" class="form-control" id="MascaraRede" placeholder="Informe a Mascara de Rede">
+                        </div>
+                        <div class="form-group ml-3">
+                            <label for="QuantidadeIps">Quantidade de Ips</label>
+                            <input type="text" class="form-control" id="QuantidadeIps" placeholder="Informe a Quantidade de Ips">
+                        </div>
+                        <div class="form-group">
+                            <label for="QuantidadeHosts">Quantidade de Hosts</label>
+                            <input type="text" class="form-control" id="QuantidadeHosts" placeholder="Informe a Quantidade de Hosts">
+                        </div>
+                        <div class="form-group ml-3">
+                            <label for="QuantidadeGrupos">Quantidade de Grupos</label>
+                            <input type="text" class="form-control" id="QuantidadeGrupos" placeholder="Informe a Quantidade de Grupos">
+                        </div>
+                        <div class="form-group">
+                            <label for="Cidr">CIDR</label>
+                            <input type="text" class="form-control" id="Cidr" placeholder="Informe o CIDR">
+                        </div>
+                        <div class="form-group ml-3">
+                            <label for="QualGrupoSeLocaliza">Qual Grupo se Localiza</label>
+                            <input type="text" class="form-control" id="QualGrupoSeLocaliza" placeholder="Informe o localiza grupo">
+                        </div>
+
+                    </div>
+
+                    <a href="#" class="btn btn-primary" id="calcular">Calcular</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Resultado</h5>
+                    <div class="row col-12">
+                     
+                            <div class="form-group">
+                                <label for="ipRedeResultado">IP Rede</label>
+                                <input type="text" class="form-control" id="ipRedeResultado" disabled>
+                            </div>
+                            <div class="form-group ml-3">
+                                <label for="hostInicialResultado">Host Inicial</label>
+                                <input type="text" class="form-control" id="hostInicialResultado" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="hostFinalResultado">Host Final</label>
+                                <input type="text" class="form-control" id="hostFinalResultado" disabled>
+                            </div>
+                            <div class="form-group ml-3">
+                                <label for="ipBroadcastResultado">IP Broadcast</label>
+                                <input type="text" class="form-control" id="ipBroadcastResultado" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="MascaraRedeResultado">Máscara de Rede</label>
+                                <input type="text" class="form-control" id="MascaraRedeResultado" disabled>
+                            </div>
+                            <div class="form-group ml-3">
+                                <label for="QuantidadeIpsResultado">Quantidade de Ips</label>
+                                <input type="text" class="form-control" id="QuantidadeIpsResultado" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="QuantidadeHostsResultado">Quantidade de Hosts</label>
+                                <input type="text" class="form-control" id="QuantidadeHostsResultado" disabled>
+                            </div>
+                            <div class="form-group ml-3">
+                                <label for="QuantidadeGruposResultado">Quantidade de Grupos</label>
+                                <input type="text" class="form-control" id="QuantidadeGruposResultado" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="CidrResultado">CIDR</label>
+                                <input type="text" class="form-control" id="CidrResultado" disabled>
+                            </div>
+                            <div class="form-group ml-3">
+                                <label for="QualGrupoSeLocalizaResultado">Qual Grupo se Localiza</label>
+                                <input type="text" class="form-control" id="QualGrupoSeLocalizaResultado" disabled>
+                            </div>
+                            <div class="alert alert-danger invisivel" id="erro" role="alert">
+                                
+                            </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+$(document).on('click', '#calcular', function () {
+    
+    var dados =
+    {
+
+        IPRede: $('#ipRede').val(),
+        HostInicial: $('#hostInicial').val(),
+        HostFinal: $('#hostFinal').val(),
+        IpBroadcast: $('#ipBroadcast').val(),
+        MascaraRede: $('#MascaraRede').val(),
+        QuantidadeIps: $('#QuantidadeIps').val(),
+        QuantidadeHosts: $('#QuantidadeHosts').val(),
+        QuantidadeGrupos: $('#QuantidadeGrupos').val(),
+        CIDR: $('#Cidr').val(),
+        qualGrupoSeLocaliza: $('#QualGrupoSeLocaliza').val(),
+
+    };
+
+    var link = '@Url.Action("CalcularElementos", "Home")';
+
+    $.post(link, dados, function (response) {
+
+        console.log(response);
+        if (response.Resultado.Mensagem == "OK") {
+            $('#erro').addClass('invisivel');
+            $('#ipRedeResultado').val(response.Resultado.IPRede);
+            $('#hostInicialResultado').val(response.Resultado.HostInicial);
+            $('#hostFinalResultado').val(response.Resultado.HostFinal);
+            $('#ipBroadcastResultado').val(response.Resultado.IpBroadcast);
+            $('#MascaraRedeResultado').val(response.Resultado.MascaraRede);
+            $('#QuantidadeIpsResultado').val(response.Resultado.QuantidadeIps);
+            $('#QuantidadeHostsResultado').val(response.Resultado.QuantidadeHosts);
+            $('#QuantidadeGruposResultado').val(response.Resultado.QuantidadeGrupos);
+            $('#CidrResultado').val(response.Resultado.CIDR);
+            $('#QualGrupoSeLocalizaResultado').val(response.Resultado.qualGrupoSeLocaliza);
+
+        } else {
+            $('#erro').removeClass('invisivel');
+            $('#erro').html(response.Resultado.Mensagem);
+
+        }
+      
+
+
+
+    });
+})
+</script>
